@@ -3,7 +3,7 @@
  * Plugin Name: Gecka Library
  * Plugin URI: http://gecka-apps.com/wordpress-plugins/gecka-library
  * Description: A usefull library of classes and additions for plugin developpement
- * Version: 1.0-beta
+ * Version: 1.0-beta1
  * Author: Gecka
  * Author URI: http://gecka.nc
  * License: GPL2+
