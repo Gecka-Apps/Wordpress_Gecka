@@ -1,0 +1,177 @@
+#gk-link {
+	line-height: 1.4em;
+	font-size: 12px;
+}
+
+#gk-link ol,
+#gk-link ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#gk-link input[type="text"] {
+	-webkit-box-sizing: border-box;
+}
+
+#gk-link input[type="text"],
+#gk-link textarea {
+	border-width: 1px;
+	border-style: solid;
+	-moz-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	font-size: 12px;
+	margin: 1px;
+	padding: 3px;
+}
+
+#gk-link #gk-link-options {
+	padding: 10px 0 14px;
+	border-bottom: 1px solid #dfdfdf;
+	margin: 0 6px 14px;
+}
+#gk-link p.howto {
+	margin: 3px;
+}
+#gk-link #gk-internal-toggle {
+	display: inline-block;
+	cursor: pointer;
+	padding-left: 18px;
+}
+#gk-link .toggle-arrow {
+	background: transparent url( '../Images/toggle-arrow.png' ) top left no-repeat;
+	height: 23px;
+	line-height: 23px;
+}
+#gk-link .toggle-arrow-active {
+	background-position: center left;
+}
+#gk-link label input[type="text"] {
+	width: 360px;
+	margin-top: 5px;
+}
+#gk-link label span {
+	display: inline-block;
+	width: 80px;
+	text-align: right;
+	padding-right: 5px;
+}
+#gk-link .link-search-wrapper {
+	margin: 5px 6px 9px;
+	display: block;
+	overflow: hidden;
+}
+#gk-link .link-search-wrapper span {
+	float: left;
+	margin-top: 6px;
+}
+#gk-link .link-search-wrapper input[type="text"] {
+	float: left;
+	width: 220px;
+}
+#gk-link .link-search-wrapper img.waiting {
+	margin: 8px 1px 0 4px;
+	float: left;
+	display: none;
+}
+#gk-link .link-target {
+	width: auto;
+	padding: 3px 0 0;
+	margin: 0 0 0 87px;
+	font-size: 11px;
+}
+#gk-link .query-results {
+	border: 1px #dfdfdf solid;
+	margin: 0 5px 5px;
+	background: #fff;
+	height: 185px;
+	overflow: auto;
+	position: relative;
+}
+#gk-link li,
+#gk-link .query-notice {
+	clear: both;
+	margin-bottom: 0;
+	border-bottom: 1px solid #f1f1f1;
+	color: #333;
+	padding: 4px 6px;
+	cursor: pointer;
+	position: relative;
+}
+#gk-link li:hover {
+	background: #eaf2fa;
+	color: #151515;
+}
+#gk-link li.unselectable {
+	border-bottom: 1px solid #dfdfdf;
+}
+#gk-link li.unselectable:hover {
+	background: #fff;
+	cursor: auto;
+	color: #333;
+}
+#gk-link li.selected {
+	background: #ddd;
+	color: #333;
+}
+#gk-link li.selected .item-title {
+	font-weight: bold;
+}
+#gk-link .item-title {
+	display: inline-block;
+	width: 80%;
+}
+#gk-link .item-info {
+	text-transform: uppercase;
+	color: #666;
+	font-size: 11px;
+	position: absolute;
+	right: 5px;
+	top: 4px;
+	bottom: 0;
+}
+#gk-link #gk-search-results {
+	display: none;
+}
+#gk-link  #gk-search-panel {
+	float: left;
+	width: 100%;
+}
+#gk-link .river-waiting {
+	display: none;
+	padding: 10px 0;
+}
+#gk-link .river-waiting img.waiting {
+	margin: 0 auto;
+	display: block;
+}
+#gk-link .submitbox {
+	padding: 5px 10px;
+	font-size: 11px;
+	overflow: auto;
+	height: 29px;
+}
+#gk-link-cancel {
+	line-height: 25px;
+	float: left;
+}
+#gk-link-update {
+	line-height: 23px;
+	float: right;
+}
+
+.gecka-select-items .item {
+	position: relative;
+	padding: 7px;
+	border: 1px solid #ccc;	
+	background-color: #eaf2fa;
+	font-size: 12px;
+	
+	margin-bottom: 5px
+}
+.gecka-select-items .items div .infos { display: block; font-variant: small-caps; color: #666;
+	font-size: 12px;margin-top: 3px;}
+
+.gecka-select-items .items div .delete { position: absolute; top: 5px; right: 5px;}
