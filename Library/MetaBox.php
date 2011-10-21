@@ -22,8 +22,7 @@ class Gecka_MetaBox {
     protected $Html;
     protected $View;
     
-    public function __construct ($Id, $Title='', $Page='', $Context='normal', $Priority='default', $Options=array() ) 
-    {
+    public function __construct ($Id, $Title='', $Page='', $Context='normal', $Priority='default', $Options=array() ) {
         
         $this->Options = wp_parse_args( $Options, $this->DefaultOptions );
         
@@ -31,9 +30,9 @@ class Gecka_MetaBox {
         $this->Prefix = isset($this->Options['Prefix']) ? $this->Options['Prefix'] : $Id;
         unset($this->Options['Prefix']);
         
-        $this->Title     = $Title;
+        $this->Title    = $Title;
         $this->Page     = $Page;
-        $this->Context     = $Context;
+        $this->Context  = $Context;
         $this->Priority = $Priority;
   
         add_action ('save_post', array($this, 'save_postdata') , 10, 2);
