@@ -1,6 +1,8 @@
 <?php
 
-class Gecka_Abstract_Options {
+require_once 'Abstract/Class.php';
+
+class Gecka_Abstract_Options extends Gecka_Abstract_Class {
     
     protected $Options;
     
