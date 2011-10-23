@@ -84,7 +84,7 @@
 			
 			var args = {
 					id : id,
-					action : 'gui-select-item'
+					action : 'gui-select-item-' + id
 			};
 						
 			dialog.dialog( {

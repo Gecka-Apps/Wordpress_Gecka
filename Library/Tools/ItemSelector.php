@@ -1,52 +1,24 @@
 <?php
 
-add_action('wp_ajax_gui-select-item', array('Gecka_Tools_ItemSelector', 'select_item_ui'));
 
 require_once 'Abstract/Options.php';
 
 class Gecka_Tools_ItemSelector extends Gecka_Abstract_Options {
 	
-	protected static $instance = array();
 	protected $id;
 	
-    public $loaded = false;
-	
-    protected function __construct ( $id, $options = array() ) { 
+    public function __construct ( $id, $options = array() ) { 
 		
     	$this->id = $id;
 		$this->set_options( $options, $this->default_options() ); 
-		$this->load();
 		
-	}
-    
-	public static function instance ($id, $options = array()) {
+		$this->add_action('wp_ajax_gui-select-item-'.$id, 'select_item_ui');
 		
-		if( ! isset(self::$instance[$id]) ) {
-    		$class = __CLASS__;
-    		self::$instance[$id] = new $class($id, $options);
-    	}
-    	
-    	return self::$instance[$id];
-    }	
-    
-    public static function has_instance ($id) {
-    	if( ! isset(self::$instance[$id]) ) return false;
-    	return true;
-    }
-	
-	public function load () {
-     	
-		if($this->loaded) return;
-		
-		if( ! is_admin() ) return;
-		
-	    wp_enqueue_script('jquery-ui-dialog');
+		wp_enqueue_script('jquery-ui-dialog');
 
         wp_enqueue_style('gui-select-item');    	    	
 	    wp_enqueue_script('gui-select-item');
     		
-	    $this->loaded = true;
-		     	     
     }
     
 	public function show ( $field_id, $value, $button_label='', $options=array() ) {
@@ -141,16 +113,9 @@ class Gecka_Tools_ItemSelector extends Gecka_Abstract_Options {
     	
     }
          
-	static function select_item_ui () {
+	public function select_item_ui () {
     	
-		// instance id
-		$id = isset( $_POST['id'] ) ? $_POST['id'] : '';
-		
-		// instance
-		$instance = Gecka_Tools_ItemSelector::has_instance($id) ? Gecka_Tools_ItemSelector::instance($id) : null;
-		if( !$instance ) die(0);
-		
-		extract( (array) $instance->get_options() );
+		extract( (array) $this->get_options() );
 		
 		/* no nonce, we show the selector ui */
     	if( !isset($_POST['_ajax_select_items_nonce']) ) {
@@ -174,7 +139,7 @@ class Gecka_Tools_ItemSelector extends Gecka_Abstract_Options {
 				
 		$args['pagenum'] = ! empty( $_POST['page'] ) ? absint( $_POST['page'] ) : 1;
 	
-		$results = $instance->select_items_query( $args );
+		$results = $this->select_items_query( $args );
 	
 		if ( ! isset( $results ) )
 			die( '0' );
