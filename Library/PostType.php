@@ -156,12 +156,12 @@ class Gecka_PostType extends Gecka_Abstract_Options {
      * @return Gecka_MetaBox
      */
     
-    public function add_meta_box ($Id, $Title='', $Context='normal', $Priority='default', $Options=array() ) {
+    public function add_meta_box ( $Id, $Title='', $Context='normal', $Priority='default', $Options=array() ) {
         require_once 'MetaBox.php';
         
         if( strpos($Id, '_') !== 0) $Id = '_' . $Id;
         
-        $MetaBox = new Gecka_MetaBox($this->Id . $Id, $Title, $this->Id, $Context, $Priority, $Options );
+        $MetaBox = new Gecka_MetaBox ( $this->Id . $Id, $Title, $this->Id, $Context, $Priority, $Options );
         $this->MetaBoxes[] = $MetaBox;
         
         return $MetaBox;
@@ -188,10 +188,6 @@ class Gecka_PostType extends Gecka_Abstract_Options {
         //if( !isset($postarr['action']) || $postarr['action'] !== 'editpost' ) return $data;
         
     	$this->EditPostErrors = apply_filters('check_post_save_'.$this->Id, $this->EditPostErrors, $data, $postarr);
-		/*ob_start();
-		var_dump($postarr);
-		var_export($this->EditPostErrors );
-		file_put_contents('/home/lox/dd/'.time(), ob_get_clean());*/
 		
         if( sizeof($this->EditPostErrors) && in_array($data['post_status'], array('publish', 'future', 'pending')) )
             $data['post_status'] = empty($postarr['original_post_status']) || $postarr['original_post_status'] == 'auto-draft'? 'draft' : $postarr['original_post_status'];
@@ -260,8 +256,8 @@ class Gecka_PostType extends Gecka_Abstract_Options {
         
         $Defaults['labels'] =  $this->GetLabels ($Name, $PluralName);
         
-        $Defaults['label']            = __($PluralName, $this->TextDomain);
-        $Defaults['singular_label']   = __($Name, $this->TextDomain);
+        $Defaults['label']            = $PluralName;
+        $Defaults['singular_label']   = $Name;
         
         if( !$PostType ) $PostType = array( $this->Id );
         
@@ -275,9 +271,8 @@ class Gecka_PostType extends Gecka_Abstract_Options {
     
     public function create_taxonomies () 
     {
-        
         foreach ($this->Taxonomies as $Id => $Options) {
-            register_taxonomy($Id, $Options[0], $Options[1]);
+        	register_taxonomy($Id, $Options[0], $Options[1]);
         }
                 
     }
@@ -291,7 +286,7 @@ class Gecka_PostType extends Gecka_Abstract_Options {
     	
     	// labels
     	
-		$this->PostTypeOptions['labels'] = $this->Labels ? $this->Labels : $this->GetLabels ();
+		$this->PostTypeOptions['labels'] = $this->labels ? $this->labels : $this->GetLabels ();
     	
 		// labels
 		if(empty($this->PostTypeOptions['template_slug']))  $this->PostTypeOptions['template_slug'] = $this->Id;
@@ -671,11 +666,9 @@ function current_type_nav_class($classes, $item) {
     {
         
         $Name     = $Name ? $Name : $this->Name;
-        $Name = __($Name, $this->TextDomain);
         
         $Plural = $PluralName ? $PluralName : $this->Plural;
         $Plural = $Plural ? $Plural : $Name .'s';
-        $Plural = __($Plural, $this->TextDomain);
         
         if( $this->Feminin) {       
         
@@ -722,19 +715,19 @@ function current_type_nav_class($classes, $item) {
         $post_ID = $post->ID;
 
         return  array(  0 => '', // Unused. Messages start at index 1.
-                          1 => ucfirst($Name) . __('updated.', $this->TextDomain) . '<a href="' . esc_url( get_permalink($post_ID) ) . '">'. __('View', $this->TextDomain). $name .'</a>',
-                          2 => __('Custom field updated.', $this->TextDomain),
-                          3 => __('Custom field deleted.', $this->TextDomain),
-                          4 => ucfirst($Name) . __('updated.', $this->TextDomain),
+                          1 => ucfirst($Name) . __('updated.', 'gecka') . '<a href="' . esc_url( get_permalink($post_ID) ) . '">'. __('View', 'gecka'). $name .'</a>',
+                          2 => __('Custom field updated.', 'gecka'),
+                          3 => __('Custom field deleted.', 'gecka'),
+                          4 => ucfirst($Name) . __(' updated.', 'gecka'),
                           /* translators: %s: date and time of the revision */
                           5 => isset($_GET['revision']) ? ucfirst($Name) . sprintf( __(' restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-                          6 => ucfirst($Name) . __('published.', $this->TextDomain) . '<a href="' . esc_url( get_permalink($post_ID) ) . '">'. __('View', $this->TextDomain). $name .'</a>',
-                          7 => ucfirst($Name) .__('saved.'),
-                          8 => sprintf( __('Book submitted. <a target="_blank" href="%s">Preview book</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-                          9 => sprintf( __('Book scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview book</a>'),
+                          6 => ucfirst($Name) . __(' published.', 'gecka') . '<a href="' . esc_url( get_permalink($post_ID) ) . '">'. __('View', 'gecka'). $name .'</a>',
+                          7 => ucfirst($Name) .__(' saved.', 'gecka'),
+                          8 => sprintf( __('%1$s submitted. <a target="_blank" href="%2$s">Preview %1$s</a>'), $Name, esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+                          9 => sprintf( __('%1$s scheduled for: <strong>%2$s</strong>. <a target="_blank" href="%3$s">Preview %1$s</a>'), $Name,
                             // translators: Publish box date format, see http://php.net/date
                             date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-                          10 => sprintf( __('Book draft updated. <a target="_blank" href="%s">Preview book</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+                          10 => sprintf( __('%1$s draft updated. <a target="_blank" href="%2$s">Preview %1$s</a>'), $Name, esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
                        );
     }
     
