@@ -21,6 +21,7 @@ class Gecka_MetaBox {
     
     protected $Html;
     protected $View;
+    protected $Callback;
     
     public function __construct ($Id, $Title='', $Page='', $Context='normal', $Priority='default', $Options=array() ) {
         
@@ -90,6 +91,11 @@ class Gecka_MetaBox {
         if ($this->View) {
             extract($Data);
             include_once $this->View; 
+        }
+        elseif ($this->Callback) {
+        	
+        	call_user_func($this->Callback, $Data, $this);
+        	
         }              
     }
     
@@ -143,26 +149,33 @@ class Gecka_MetaBox {
              
             if( !update_post_meta($post_id, $meta_key, $val) ) {
                 add_post_meta($post_id, $meta_key, $val, true);
-            }
-            
-                
+            }   
         }
         
     }
     
     public function set_fields_names($names) {
-        if(is_string($names)) {
+        
+    	if(is_string($names)) {
             $names = explode(',', $names);
             $names = array_map('trim', $names);
         }
         $this->Fields_Names = array_merge($this->Fields_Names, $names);
         return $this;
+    
     }
     
     public function set_view($View) {
         
         $this->View = $View;
         return $this;
+        
+    }
+    
+	public function set_callback ( $Callback ) {
+        
+		$this->Callback = $Callback;
+		return $this;
         
     }
     
@@ -179,7 +192,7 @@ class Gecka_MetaBox {
         return $this->Html;
     }
     
-    private function field_name ($Name) {
+    public function field_name ($Name) {
         return $this->Id . '_' . $Name;
     }
 }
