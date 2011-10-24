@@ -7,10 +7,16 @@ class Gecka_Tools_ItemSelector extends Gecka_Abstract_Options {
 	
 	protected $id;
 	
+	/**
+	 * Constructor
+	 * @param string $id Selector ID of your choice
+	 * @param array $options Selector options
+	 */
     public function __construct ( $id, $options = array() ) { 
 		
     	$this->id = $id;
-		$this->set_options( $options, $this->default_options() ); 
+    	
+    	$this->set_options( $options, $this->default_options() ); 
 		
 		$this->add_action('wp_ajax_gui-select-item-'.$id, 'select_item_ui');
 		
@@ -21,20 +27,31 @@ class Gecka_Tools_ItemSelector extends Gecka_Abstract_Options {
     		
     }
     
+    /**
+     * Shows the selector and selected items if any
+     * @param string $field_id
+     * @param array $value
+     * @param string $button_label
+     * @param array $options
+     */
 	public function show ( $field_id, $value, $button_label='', $options=array() ) {
-	    
+		
 		// default button label
 		if( empty($button_label) && $this->get('multiple') ) $button_label = __('Add', 'gecka');
 	    else $button_label = __('Select', 'gecka');  
 	    
+	    // options
 	    $options = wp_parse_args( $options, (array)$this->get_options() );
 	    extract($options);
 	    
+	    // callbacks
 	    $onCancel = isset($onCancel) ? $onCancel : null;
     	$onSelect = isset($onSelect) ? $onSelect : null;
     		    
+    	// js function args
 	    $args = json_encode( compact( 'onSelect', 'onCancel', 'multiple', 'link', 'internal', 'title' ) );
 	    
+	    // output selected items
 	    ?>
 		<div class="gecka-select-items" id="gecka_items_selector-<?php echo $field_id ?>">
 				
@@ -51,7 +68,8 @@ class Gecka_Tools_ItemSelector extends Gecka_Abstract_Options {
 				<?php 
 				if(!$multiple) $value = array($value);
 				foreach ( (array) $value as $_id => $item ) :
-					
+						if( !is_a($item, 'stdClass')) $item = json_decode($item);
+						
 						if( !$item ) continue;
 				
 						switch ( $type = $item->type ) {
@@ -112,7 +130,10 @@ class Gecka_Tools_ItemSelector extends Gecka_Abstract_Options {
 	    	<?php
     	
     }
-         
+    
+    /**
+     * Shows the item select UI and the items query result
+     */
 	public function select_item_ui () {
     	
 		extract( (array) $this->get_options() );
@@ -150,6 +171,11 @@ class Gecka_Tools_ItemSelector extends Gecka_Abstract_Options {
 		exit;
     }
     
+    /**
+     * Queries item to select
+     * @param array() $args
+     * @return boolean|array
+     */
 	public function select_items_query( $args = array() ) {
 		
 		switch($args['type']) {
@@ -250,6 +276,9 @@ class Gecka_Tools_ItemSelector extends Gecka_Abstract_Options {
 		}
 	}
 	
+	/**
+	 * Default options
+	 */
 	protected function default_options () {
 
 		return array( 'link' => true,

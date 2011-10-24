@@ -28,6 +28,7 @@ class Gecka_MetaBox {
         $this->Options = wp_parse_args( $Options, $this->DefaultOptions );
         
         $this->Id = $Id;
+        
         $this->Prefix = isset($this->Options['Prefix']) ? $this->Options['Prefix'] : $Id;
         unset($this->Options['Prefix']);
         
@@ -94,7 +95,7 @@ class Gecka_MetaBox {
         }
         elseif ($this->Callback) {
         	
-        	call_user_func($this->Callback, $Data, $this);
+        	call_user_func($this->Callback, $Data, $args, $this);
         	
         }              
     }

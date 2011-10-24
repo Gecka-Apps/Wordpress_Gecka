@@ -562,7 +562,7 @@
 			
 			var self = this,
 				query = {
-					action : 'gui-select-item',
+					action : 'gui-select-item-'+opts.id,
 					page : this.page,
 					'_ajax_select_items_nonce' : $('#_ajax_select_items_nonce').val(),
 					id: opts.id
