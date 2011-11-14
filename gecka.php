@@ -26,16 +26,16 @@ load_plugin_textdomain('gecka', false, dirname(plugin_basename(__FILE__)) . '/La
 // require PHP 5
 function gecka_activation_check() {
 	
-    if (version_compare(PHP_VERSION, '5.1.3', '<')) {
+    if (version_compare(PHP_VERSION, '5.2.4', '<')) {
         deactivate_plugins( basename(dirname(__FILE__)) . '/' . basename(__FILE__) ); // Deactivate ourself
-        wp_die( sprintf( __("Sorry, the Gecka Library requires PHP 5.1.3 or higher. You use PHP %s. Ask your host how to enable PHP 5.1.3 or higher as the default on your servers.", 'gecka'), PHP_VERSION) );
+        wp_die( sprintf( __("Sorry, the Gecka Library requires PHP 5.2.4 or higher. You use PHP %s. Ask your host how to enable PHP 5.2.4 or higher as the default on your servers.", 'gecka'), PHP_VERSION) );
     }
     
 }
 register_activation_hook(__FILE__, 'gecka_activation_check');
 
 // ensure PHP5 code doesn't throw an error on PHP4 installs
-if ( ! version_compare(PHP_VERSION, '5.1.3', '<') ) {
+if ( ! version_compare(PHP_VERSION, '5.2.4', '<') ) {
 
 	/**
 	 * Gecka library init hook

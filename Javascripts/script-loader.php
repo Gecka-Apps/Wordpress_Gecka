@@ -17,9 +17,9 @@ wp_register_script( 'jquery-cycle-lite', GK_URL . "/Javascripts/jquery/jquery.cy
 
 //wp_register_script( 'gui-httpr-upload', GK_URL . '/Javascripts/gui/httpr/upload.js', array('jquery', 'jquery-ui-core'));
 
-wp_register_script( 'gui-form', GK_URL . "/Javascripts/gui/Form$suffix.js", array('jquery-form'));
+wp_register_script( 'gui-form', GK_URL . "/Javascripts/gui/Form$suffix.js", array('jquery-form'), GK_VERSION);
 
-wp_register_script( 'gui-tips', GK_URL . "/Javascripts/gui/Tips$suffix.js", array('jquery'));
+wp_register_script( 'gui-tips', GK_URL . "/Javascripts/gui/Tips$suffix.js", array('jquery'), GK_VERSION);
 
 wp_register_script( 'gui-select-item', GK_URL . "/Javascripts/gui/SelectItem$suffix.js", array('jquery-ui-dialog', 'json2'), GK_VERSION);
 
@@ -32,7 +32,11 @@ wp_localize_script( 'gui-select-item', 'guiSelectItemL10n', array(
 					'newTab' => __('Opens in a new window', 'gecka'),
 					'sameTab' => __('Opens in same window', 'gecka')) );
 
-wp_register_style('gui-select-item', GK_URL . '/Css/SelectItem.css');
+wp_register_style('gui-select-item', GK_URL . "/Css/SelectItem$suffix.css", array(), GK_VERSION);
+
+wp_register_style( 'admin-settings-page', GK_URL . "/Css/Admin-Settings-Page$suffix.css", array(), GK_VERSION);
+wp_register_script( 'admin-settings-page', GK_URL . "/Javascripts/Admin-Settings-Page$suffix.js", array('jquery'), GK_VERSION);
+
 
 /*wp_register_script( 'fancybox', GK_URL . '/Javascripts/fancybox/jquery.fancybox-1.3.1.pack.js', array('jquery'));
 wp_register_style( 'fancybox', GK_URL . '/Javascripts/fancybox/jquery.fancybox-1.3.1.css');

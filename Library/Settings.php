@@ -72,6 +72,11 @@ class Gecka_Settings extends Gecka_Abstract_Class {
 	public function __set( $name, $value ) {
 		return $this->set( $name, $value );
 	}
+	
+	public function __isset($name) {
+		if( isset($this->settings->$name) ) return true;
+		return false;
+	}
 
 	/**
 	 * Save all settings to databse
@@ -123,7 +128,8 @@ class Gecka_Settings extends Gecka_Abstract_Class {
 	 * Returns the default settings
 	 * @return array The default settings
 	 */
-	private function defaults () {
+	protected function defaults () {
+		
 		$settings = array ( );
 
 		return apply_filters( $this->wp_options_var . '-default-settings', $settings);
